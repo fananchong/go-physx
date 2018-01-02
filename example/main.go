@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"time"
 
 	gophysx "github.com/fananchong/go-physx"
@@ -10,10 +11,11 @@ func main() {
 
 	{
 		for i := 0; i < 10; i++ {
-			_, err := gophysx.NewScene("pxscene")
+			scene, err := gophysx.NewScene("pxscene")
 			if err != nil {
 				panic(err)
 			}
+			scene.Release()
 		}
 	}
 
@@ -32,9 +34,14 @@ func main() {
 		case <-t.C:
 			{
 				nowTime := time.Now().UnixNano()
-				diff := float32(nowTime-preTime) / float32(time.Millisecond)
+				diff := float32(nowTime-preTime) / float32(time.Second)
+				preTime = nowTime
 				scene.Update(diff)
+				pos := scene.GetGlobalPostion(actor)
+				fmt.Println("diff =", diff)
+				fmt.Printf("(x, y, z) = (%f,%f,%f)\n", pos.X, pos.Y, pos.Z)
 			}
 		}
 	}
+	scene.Release()
 }
