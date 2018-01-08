@@ -19,12 +19,13 @@ func main() {
 		}
 	}
 
-	scene, err := gophysx.NewScene("pxscene")
+	scene, err := gophysx.NewScene("")
 	if err != nil {
 		panic(err)
 	}
 
-	actor := scene.CreateSphereDynamic(gophysx.Vector3{10, 25, 10}, 25)
+	scene.CreatePlane(0)
+	actor := scene.CreateSphereDynamic(gophysx.Vector3{0, 25, 0}, 25)
 	scene.SetLinearVelocity(actor, gophysx.Vector3{0, 0, 1})
 
 	preTime := time.Now().UnixNano()
