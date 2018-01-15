@@ -166,6 +166,12 @@ func (this *PxScene) CreateCapsuleStatic(pos Vector3, radius, halfHeight float32
 	return
 }
 
+func (this *PxScene) RemoveActor(id uint64) {
+	if this.c != nil {
+		C.RemoveActor(this.c, C.ulonglong(id))
+	}
+}
+
 func (this *PxScene) SetLinearVelocity(id uint64, velocity Vector3) {
 	if this.c != nil {
 		cVelocity := C.Vector3{}
