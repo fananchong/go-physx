@@ -241,3 +241,17 @@ func (this *PxScene) SetGlobalRotate(id uint64, rotate Quat) {
 		C.SetGlobalRotate(this.c, C.ulonglong(id), &cRotate)
 	}
 }
+
+func (this *PxScene) IsStaticObj(id uint64) (ok bool) {
+	if this.c != nil {
+		ok = (C.IsStaticObj(this.c, C.ulonglong(id)) != 0)
+	}
+	return
+}
+
+func (this *PxScene) IsDynamicObj(id uint64) (ok bool) {
+	if this.c != nil {
+		ok = (C.IsDynamicObj(this.c, C.ulonglong(id)) != 0)
+	}
+	return
+}
