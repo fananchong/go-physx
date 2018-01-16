@@ -255,3 +255,15 @@ func (this *PxScene) IsDynamicObj(id uint64) (ok bool) {
 	}
 	return
 }
+
+func (this *PxScene) SetCurrentMaterial(staticFriction, dynamicFriction, restitution float32) {
+	if this.c != nil {
+		C.SetCurrentMaterial(this.c, C.float(staticFriction), C.float(dynamicFriction), C.float(restitution))
+	}
+}
+
+func (this *PxScene) SetCurrentAngularDamping(value float32) {
+	if this.c != nil {
+		C.SetCurrentAngularDamping(this.c, C.float(value))
+	}
+}
