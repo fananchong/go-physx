@@ -3,9 +3,13 @@ package gophysx
 /*
 #cgo LDFLAGS: -L./ -lPhysxWrapGo
 #include "PhysxWrapGo.h"
+#include "stdlib.h"
 */
 import "C"
-import "errors"
+import (
+	"errors"
+	"unsafe"
+)
 
 var bInitSDK int
 
@@ -24,11 +28,13 @@ type PxScene struct {
 }
 
 func NewScene(path string) (*PxScene, error) {
+	spath := C.CString(path)
+	defer C.free(unsafe.Pointer(spath))
 	if bInitSDK == 0 {
 		return nil, ErrNeedInitSDK
 	}
 	this := &PxScene{}
-	this.c = C.CreateScene(C.CString(path))
+	this.c = C.CreateScene(spath)
 	if this.c == nil {
 		return nil, ErrCreateSceneFail
 	}
