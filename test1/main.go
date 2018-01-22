@@ -3,16 +3,28 @@ package main
 import (
 	"fmt"
 	"math/rand"
+	_ "net/http/pprof"
 	"time"
 
 	gophysx "github.com/fananchong/go-physx"
 )
 
 const (
-	DEFAULT_TEST_COUNT = 100000
+	DEFAULT_TEST_COUNT = 1000
 )
 
 func main() {
+
+	//	f, err := os.Create("mem.prof")
+	//	if err != nil {
+	//		log.Fatal(err)
+	//	}
+	//	defer pprof.WriteHeapProfile(f)
+
+	//	go func() {
+	//		log.Fatal(http.ListenAndServe(":9876", nil))
+	//	}()
+
 	rand.NewSource(time.Now().UnixNano())
 	for i := 0; i < DEFAULT_TEST_COUNT; i++ {
 		scene, err := gophysx.NewScene("")
@@ -37,4 +49,5 @@ func main() {
 		scene = nil
 		fmt.Print(".")
 	}
+
 }

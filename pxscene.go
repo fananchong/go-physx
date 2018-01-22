@@ -24,7 +24,7 @@ var ErrNeedInitSDK = errors.New("physx sdk is not init.")
 var ErrCreateSceneFail = errors.New("create scene fail.")
 
 type PxScene struct {
-	c C.PxScene
+	c unsafe.Pointer
 }
 
 func NewScene(path string) (*PxScene, error) {
@@ -63,111 +63,63 @@ func (this *PxScene) CreatePlane(yAxis float32) (id uint64) {
 
 func (this *PxScene) CreateBoxDynamic(pos Vector3, halfExtents Vector3) (id uint64) {
 	if this.c != nil {
-		cPos := C.Vector3{}
-		cPos.X = C.float(pos.X)
-		cPos.Y = C.float(pos.Y)
-		cPos.Z = C.float(pos.Z)
-		cHalfExtents := C.Vector3{}
-		cHalfExtents.X = C.float(halfExtents.X)
-		cHalfExtents.Y = C.float(halfExtents.Y)
-		cHalfExtents.Z = C.float(halfExtents.Z)
-		id = uint64(C.CreateBoxDynamic(this.c, &cPos, &cHalfExtents))
+		id = uint64(C.CreateBoxDynamic(this.c, C.float(pos.X), C.float(pos.Y), C.float(pos.Z), C.float(halfExtents.X), C.float(halfExtents.Y), C.float(halfExtents.Z)))
 	}
 	return
 }
 
 func (this *PxScene) CreateBoxKinematic(pos Vector3, halfExtents Vector3) (id uint64) {
 	if this.c != nil {
-		cPos := C.Vector3{}
-		cPos.X = C.float(pos.X)
-		cPos.Y = C.float(pos.Y)
-		cPos.Z = C.float(pos.Z)
-		cHalfExtents := C.Vector3{}
-		cHalfExtents.X = C.float(halfExtents.X)
-		cHalfExtents.Y = C.float(halfExtents.Y)
-		cHalfExtents.Z = C.float(halfExtents.Z)
-		id = uint64(C.CreateBoxKinematic(this.c, &cPos, &cHalfExtents))
+		id = uint64(C.CreateBoxKinematic(this.c, C.float(pos.X), C.float(pos.Y), C.float(pos.Z), C.float(halfExtents.X), C.float(halfExtents.Y), C.float(halfExtents.Z)))
 	}
 	return
 }
 
 func (this *PxScene) CreateBoxStatic(pos Vector3, halfExtents Vector3) (id uint64) {
 	if this.c != nil {
-		cPos := C.Vector3{}
-		cPos.X = C.float(pos.X)
-		cPos.Y = C.float(pos.Y)
-		cPos.Z = C.float(pos.Z)
-		cHalfExtents := C.Vector3{}
-		cHalfExtents.X = C.float(halfExtents.X)
-		cHalfExtents.Y = C.float(halfExtents.Y)
-		cHalfExtents.Z = C.float(halfExtents.Z)
-		id = uint64(C.CreateBoxStatic(this.c, &cPos, &cHalfExtents))
+		id = uint64(C.CreateBoxStatic(this.c, C.float(pos.X), C.float(pos.Y), C.float(pos.Z), C.float(halfExtents.X), C.float(halfExtents.Y), C.float(halfExtents.Z)))
 	}
 	return
 }
 
 func (this *PxScene) CreateSphereDynamic(pos Vector3, radius float32) (id uint64) {
 	if this.c != nil {
-		cPos := C.Vector3{}
-		cPos.X = C.float(pos.X)
-		cPos.Y = C.float(pos.Y)
-		cPos.Z = C.float(pos.Z)
-		id = uint64(C.CreateSphereDynamic(this.c, &cPos, C.float(radius)))
+		id = uint64(C.CreateSphereDynamic(this.c, C.float(pos.X), C.float(pos.Y), C.float(pos.Z), C.float(radius)))
 	}
 	return
 }
 
 func (this *PxScene) CreateSphereKinematic(pos Vector3, radius float32) (id uint64) {
 	if this.c != nil {
-		cPos := C.Vector3{}
-		cPos.X = C.float(pos.X)
-		cPos.Y = C.float(pos.Y)
-		cPos.Z = C.float(pos.Z)
-		id = uint64(C.CreateSphereKinematic(this.c, &cPos, C.float(radius)))
+		id = uint64(C.CreateSphereKinematic(this.c, C.float(pos.X), C.float(pos.Y), C.float(pos.Z), C.float(radius)))
 	}
 	return
 }
 
 func (this *PxScene) CreateSphereStatic(pos Vector3, radius float32) (id uint64) {
 	if this.c != nil {
-		cPos := C.Vector3{}
-		cPos.X = C.float(pos.X)
-		cPos.Y = C.float(pos.Y)
-		cPos.Z = C.float(pos.Z)
-		id = uint64(C.CreateSphereStatic(this.c, &cPos, C.float(radius)))
+		id = uint64(C.CreateSphereStatic(this.c, C.float(pos.X), C.float(pos.Y), C.float(pos.Z), C.float(radius)))
 	}
 	return
 }
 
 func (this *PxScene) CreateCapsuleDynamic(pos Vector3, radius, halfHeight float32) (id uint64) {
 	if this.c != nil {
-		cPos := C.Vector3{}
-		cPos.X = C.float(pos.X)
-		cPos.Y = C.float(pos.Y)
-		cPos.Z = C.float(pos.Z)
-		id = uint64(C.CreateCapsuleDynamic(this.c, &cPos, C.float(radius), C.float(halfHeight)))
+		id = uint64(C.CreateCapsuleDynamic(this.c, C.float(pos.X), C.float(pos.Y), C.float(pos.Z), C.float(radius), C.float(halfHeight)))
 	}
 	return
 }
 
 func (this *PxScene) CreateCapsuleKinematic(pos Vector3, radius, halfHeight float32) (id uint64) {
 	if this.c != nil {
-		cPos := C.Vector3{}
-		cPos.X = C.float(pos.X)
-		cPos.Y = C.float(pos.Y)
-		cPos.Z = C.float(pos.Z)
-		id = uint64(C.CreateCapsuleKinematic(this.c, &cPos, C.float(radius), C.float(halfHeight)))
+		id = uint64(C.CreateCapsuleKinematic(this.c, C.float(pos.X), C.float(pos.Y), C.float(pos.Z), C.float(radius), C.float(halfHeight)))
 	}
 	return
 }
 
 func (this *PxScene) CreateCapsuleStatic(pos Vector3, radius, halfHeight float32) (id uint64) {
 	if this.c != nil {
-		cPos := C.Vector3{}
-		cPos.X = C.float(pos.X)
-		cPos.Y = C.float(pos.Y)
-		cPos.Z = C.float(pos.Z)
-		id = uint64(C.CreateCapsuleStatic(this.c, &cPos, C.float(radius), C.float(halfHeight)))
+		id = uint64(C.CreateCapsuleStatic(this.c, C.float(pos.X), C.float(pos.Y), C.float(pos.Z), C.float(radius), C.float(halfHeight)))
 	}
 	return
 }
@@ -180,21 +132,13 @@ func (this *PxScene) RemoveActor(id uint64) {
 
 func (this *PxScene) SetLinearVelocity(id uint64, velocity Vector3) {
 	if this.c != nil {
-		cVelocity := C.Vector3{}
-		cVelocity.X = C.float(velocity.X)
-		cVelocity.Y = C.float(velocity.Y)
-		cVelocity.Z = C.float(velocity.Z)
-		C.SetLinearVelocity(this.c, C.ulonglong(id), &cVelocity)
+		C.SetLinearVelocity(this.c, C.ulonglong(id), C.float(velocity.X), C.float(velocity.Y), C.float(velocity.Z))
 	}
 }
 
 func (this *PxScene) AddForce(id uint64, force Vector3) {
 	if this.c != nil {
-		cForce := C.Vector3{}
-		cForce.X = C.float(force.X)
-		cForce.Y = C.float(force.Y)
-		cForce.Z = C.float(force.Z)
-		C.AddForce(this.c, C.ulonglong(id), &cForce)
+		C.AddForce(this.c, C.ulonglong(id), C.float(force.X), C.float(force.Y), C.float(force.Z))
 	}
 }
 
@@ -204,47 +148,29 @@ func (this *PxScene) ClearForce(id uint64) {
 	}
 }
 
-func (this *PxScene) GetGlobalPostion(id uint64) (outPostion Vector3) {
+func (this *PxScene) GetGlobalPostion(id uint64) (outPostionX, outPostionY, outPostionZ float32) {
 	if this.c != nil {
-		cPos := C.Vector3{}
-		C.GetGlobalPostion(this.c, C.ulonglong(id), &cPos)
-		outPostion.X = float32(cPos.X)
-		outPostion.Y = float32(cPos.Y)
-		outPostion.Z = float32(cPos.Z)
+		C.GetGlobalPostion(this.c, C.ulonglong(id), unsafe.Pointer(&outPostionX), unsafe.Pointer(&outPostionY), unsafe.Pointer(&outPostionZ))
 	}
 	return
 }
 
-func (this *PxScene) GetGlobalRotate(id uint64) (outRotate Quat) {
+func (this *PxScene) GetGlobalRotate(id uint64) (outRotateX, outRotateY, outRotateZ, outRotateW float32) {
 	if this.c != nil {
-		cRotate := C.Quat{}
-		C.GetGlobalRotate(this.c, C.ulonglong(id), &cRotate)
-		outRotate.X = float32(cRotate.X)
-		outRotate.Y = float32(cRotate.Y)
-		outRotate.Z = float32(cRotate.Z)
-		outRotate.W = float32(cRotate.W)
+		C.GetGlobalRotate(this.c, C.ulonglong(id), unsafe.Pointer(&outRotateX), unsafe.Pointer(&outRotateY), unsafe.Pointer(&outRotateZ), unsafe.Pointer(&outRotateW))
 	}
 	return
 }
 
 func (this *PxScene) SetGlobalPostion(id uint64, pos Vector3) {
 	if this.c != nil {
-		cPos := C.Vector3{}
-		cPos.X = C.float(pos.X)
-		cPos.Y = C.float(pos.Y)
-		cPos.Z = C.float(pos.Z)
-		C.SetGlobalPostion(this.c, C.ulonglong(id), &cPos)
+		C.SetGlobalPostion(this.c, C.ulonglong(id), C.float(pos.X), C.float(pos.Y), C.float(pos.Z))
 	}
 }
 
 func (this *PxScene) SetGlobalRotate(id uint64, rotate Quat) {
 	if this.c != nil {
-		cRotate := C.Quat{}
-		cRotate.X = C.float(rotate.X)
-		cRotate.Y = C.float(rotate.Y)
-		cRotate.Z = C.float(rotate.Z)
-		cRotate.Z = C.float(rotate.W)
-		C.SetGlobalRotate(this.c, C.ulonglong(id), &cRotate)
+		C.SetGlobalRotate(this.c, C.ulonglong(id), C.float(rotate.X), C.float(rotate.Y), C.float(rotate.Z), C.float(rotate.W))
 	}
 }
 

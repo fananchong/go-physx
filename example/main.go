@@ -38,9 +38,9 @@ func main() {
 				diff := float32(nowTime-preTime) / float32(time.Second)
 				preTime = nowTime
 				scene.Update(diff)
-				pos := scene.GetGlobalPostion(actor)
+				posX, posY, posZ := scene.GetGlobalPostion(actor)
 				fmt.Println("diff =", diff)
-				fmt.Printf("(x, y, z) = (%f,%f,%f)\n", pos.X, pos.Y, pos.Z)
+				fmt.Printf("(x, y, z) = (%f,%f,%f)\n", posX, posY, posZ)
 			}
 		}
 	}
