@@ -20,6 +20,10 @@ func init() {
 	}
 }
 
+func ReleasePhysxSDK() {
+	C.ReleasePhysxSDK()
+}
+
 var ErrNeedInitSDK = errors.New("physx sdk is not init.")
 var ErrCreateSceneFail = errors.New("create scene fail.")
 
